@@ -1,4 +1,5 @@
 # Red-Pitaya-Levitodynamics-Feedback-Project
+
 Description: Red Pitaya FPGA feedback project to control (in this case, stabilize or "cool") levitated particles in a trap. It was designed for using electrodes to cool charged optically levitated nanoparticles, but it can work in other types of oscillators with no or minor modifications (for instance, charged particles in Paul traps). The FPGA bitstream is generated with Vivado and comes with a set of C code to control the FPGA parameters from the CPU part of the Red Pitaya (working from the Red Pitaya terminal). The C routine manages the LQR controller parameters, the feedback delay and an optional adaptive loop that automatically optimizes the feedback parameter k_d with a gradient descent algorithm.
 
 For an in-depth description on how it was used and meaning of parameters, read Ref: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.122.223602 (in particular, check the Supplemental Material). If you use this code (or a modified version of it) in a paper, I ask that you cite 
@@ -13,17 +14,17 @@ Guide on what to do to get started with the Red Pitaya.
 Follow this guide to get things working. You should exactly use the versions specified in here, otherwise I can't assure that it will work.
 
 
-1 Get a Red Pitaya!
+1- Get a Red Pitaya!
 --------------
 Quite clear what to do.
 
-2 Install fresh red pitaya image
+2- Install fresh red pitaya image
 --------------
 Windows:
 Download the image redpitaya_ubuntu_17-11-35_01-sep-2017.img, install to a microSD with win32diskimager. If the version is not this, I don’t guarantee that any of the following will work. Also, make sure that the microSD is of 32GB or less. Otherwise it will (probably) not work.
 
 
-3 Connect to the Red Pitaya (RP):
+3- Connect to the Red Pitaya (RP):
 --------------
 I recommend creating a local network with a switch, connected to an extra network card in the computer. 
 
@@ -49,7 +50,7 @@ Windows
 Like in ubuntu, but use Putty (https://www.putty.org/).
 
 
-4 Programming with the RP
+4- Programming with the RP
 --------------
 From now on it will be assumed that we work on Ubuntu. This section is ONLY REQUIRED IF YOU WANT TO MODIFY THE FPGA CODE. If not the case, you can just download the standard bistream file and load it to the Red Pitaya.
 
@@ -65,7 +66,7 @@ To compile the code and generate a bitstream, click on "Generate Bitstream".
 To save the Vivado project (in an autocontained file without external dependencies), go to Vivavdo File -> Project -> Archive, selecting the desired options.
 
 
-5 Loading bitstream and controlling the RP from the CPU with a C routine
+5- Loading a bitstream and controlling the RP from the CPU with a C routine
 --------------
 C code should always be compiled IN THE REDPITAYA, and also executed there. Once we have compiled our Vivado project and we have a bitstream (.bit) file. We need to copy this file to the redpitaya with (the folder below is just an example, but they all follow the same structure):
 
@@ -93,3 +94,23 @@ If you want to roll back to the normal red pitaya bitstream type:
 > cat /opt/redpitaya/fpga/fpga_X.XX.bit > /dev/xdevcfg
 
 Where fpga_X.XX is the current version, whatever it is. Reinitializing the red pitaya also works.
+
+
+6- Feedback bitstream, control routine and final remarks
+--------------
+Load the bitstream opt_control.bit to the RP as specified in the previous sections. Likewise, transfer from your PC the C file cpu_opt_control.c, compile it in the RP and run the output file. The feedback input x(t) should be connected to IN1, and the feedback output f(t) comes in OUT1. The (optional) machine learning feedback optimizer uses IN2 as the reference signal and tries to minimize its energy.
+
+The C control routine should be pretty intuitive to navigate. The basic interface allows you to type
+
+    'p' to print current settings (k_p, k_d, delay)
+    'delay' to configure the total delay,
+    'f' to configure the feedback parameters (i.e, k_p and k_d),
+    'ml' to start a ML routine and optimize k_d step by step,
+    'mlauto' to start a ML routine and optimize kd automatically,
+    'k' to kill (i.e. stop) the feedback!,
+    'exit' to quit
+
+Here, k_p and k_d are the proportional and derivative terms of the feedback force. In other words, k_p is the coefficient of a force term that is proportional to x(t) and k_d is the coefficient of a force term that is proportional to x'(t). Since in our experiments we don't observe x'(t) directly, we exploit the oscillatory behaviour of the oscillator to approximate x'(t) by delaying the signal input by -90 degrees. This is achieved through the "delay" input, which uses a programmable shift register to implement a delay of n cycles of the internal clock signal (running at 62.5 MHz). It is suggested to first calibrate the feedback delay with a pure sinusoid of a similar frequency (in our case ~125 kHz) before trying with the real system. 
+
+
+> By: Gerard Planes Conangla
