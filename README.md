@@ -39,12 +39,12 @@ To actually work inside the RP, you will need to connect from a terminal. How to
 
 Ubuntu
 With ssh: 
-> ssh root@rp_ip_address
+    > ssh root@rp_ip_address
 Password: root
 
 You should be inside the redpitaya, that runs a version of Linux. Hence, you can do anything you would do on a Linux machine (like, e.g., compiling C code with gcc):
 
-> gcc some_code.c -o some_code.o
+    > gcc some_code.c -o some_code.o
 
 Windows
 Like in ubuntu, but use Putty (https://www.putty.org/).
@@ -70,28 +70,28 @@ To save the Vivado project (in an autocontained file without external dependenci
 --------------
 C code should always be compiled IN THE REDPITAYA, and also executed there. Once we have compiled our Vivado project and we have a bitstream (.bit) file. We need to copy this file to the redpitaya with (the folder below is just an example, but they all follow the same structure):
 
-> cd redpitaya_guide/tmp/1_projectname/1_projectname.runs/impl_1/
-> scp system_wrapper.bit root@your_rp_ip:whatever_name_you_like.bit
+    > cd redpitaya_guide/tmp/1_projectname/1_projectname.runs/impl_1/
+    > scp system_wrapper.bit root@your_rp_ip:whatever_name_you_like.bit
 
 Now connect to red pitaya
 
-> ssh root@192.168.1.3 (pw = “root”)
+    > ssh root@192.168.1.3 (pw = “root”)
 
 To load our bitstream to the FPGA (as opposed to the default RP program that loads once you access the RP from the browser): assume it is located in the /root/ folder of the Red Pitaya:
 
-> cat /root/led_blink.bit > /dev/xdevcfg
+    > cat /root/led_blink.bit > /dev/xdevcfg
 
 After this it should start running whatever we have programmed. To now run the C routine to control whatever parameters are accessible in the FPGA, first compile it with
 
-> gcc some_code.c -o some_code.o -lm
+    > gcc some_code.c -o some_code.o -lm
 
 And then run it with
 
-> ./some_code.o 
+    > ./some_code.o 
 
 If you want to roll back to the normal red pitaya bitstream type:
 
-> cat /opt/redpitaya/fpga/fpga_X.XX.bit > /dev/xdevcfg
+    > cat /opt/redpitaya/fpga/fpga_X.XX.bit > /dev/xdevcfg
 
 Where fpga_X.XX is the current version, whatever it is. Reinitializing the red pitaya also works.
 
