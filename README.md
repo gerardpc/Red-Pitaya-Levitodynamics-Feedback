@@ -1,7 +1,11 @@
 # Red-Pitaya-Levitodynamics-Feedback-Project
 Description: Red Pitaya FPGA feedback project to control (in this case, stabilize or "cool") levitated particles in a trap. It was designed for using electrodes to cool charged optically levitated nanoparticles, but it can work in other types of oscillators with no or minor modifications (for instance, charged particles in Paul traps). The FPGA bitstream is generated with Vivado and comes with a set of C code to control the FPGA parameters from the CPU part of the Red Pitaya (working from the Red Pitaya terminal). The C routine manages the LQR controller parameters, the feedback delay and an optional adaptive loop that automatically optimizes the feedback parameter k_d with a gradient descent algorithm.
 
-For an in-depth description on how it was used, read Ref: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.122.223602 (in particular, check the Supplemental Material). For any other comments, drop me a message.
+For an in-depth description on how it was used and meaning of parameters, read Ref: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.122.223602 (in particular, check the Supplemental Material). If you use this code (or a modified version of it) in a paper, I ask that you cite 
+> Conangla, Gerard P., et al. "Optimal Feedback Cooling of a charged Levitated Nanoparticle with Adaptive Control." Physical Review Letters 122.22 (2019): 223602.
+in the references section.
+
+For any other comments or questions, drop me a message.
 
 
 Guide on what to do to get started with the Red Pitaya. It is in the order you should follow to get things working. You should exactly use the versions specified in this guide, otherwise I can't assure that it will work.
