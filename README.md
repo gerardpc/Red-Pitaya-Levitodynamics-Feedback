@@ -6,7 +6,7 @@ For an in-depth description on how it was used and meaning of parameters, read R
 > Conangla, Gerard P., et al. "Optimal Feedback Cooling of a charged Levitated Nanoparticle with Adaptive Control." Physical Review Letters 122.22 (2019): 223602.
 in the references section.
 
-For any other comments or questions, drop me a message.
+For any other comments, suggestions or questions, drop me a message.
 
 
 Guide on what to do to get started with the Red Pitaya.
@@ -110,7 +110,9 @@ The C control routine should be pretty intuitive to navigate. The basic interfac
     'k' to kill (i.e. stop) the feedback!,
     'exit' to quit
 
-Here, k_p and k_d are the proportional and derivative terms of the feedback force. In other words, k_p is the coefficient of a force term that is proportional to x(t) and k_d is the coefficient of a force term that is proportional to x'(t). Since in our experiments we don't observe x'(t) directly, we exploit the oscillatory behaviour of the oscillator to approximate x'(t) by delaying the signal input by -90 degrees. This is achieved through the "delay" input, which uses a programmable shift register to implement a delay of n cycles of the internal clock signal (running at 125 MHz). It is suggested to first calibrate the feedback delay with a pure sinusoid of a similar frequency (in our case ~125 kHz) before trying with the real system. Similarly, the machine learning routine will probably require tuning the step size for a particular experiment. This should be easy to do since everything is included in the C routine, and the ML part is well documented.
+Here, k_p and k_d are the proportional and derivative terms of the feedback force. In other words, k_p is the coefficient of a force term that is proportional to x(t) and k_d is the coefficient of a force term that is proportional to x'(t). Since in our experiments we don't observe x'(t) directly, we exploit the oscillatory behaviour of the oscillator to approximate x'(t) by delaying the signal input by -90 degrees. This is achieved through the "delay" input, which uses a programmable shift register to implement a delay of n cycles of the internal clock signal (running at 125 MHz). It is suggested to first calibrate the feedback delay with a pure sinusoid of a similar frequency before trying with the real system. In our case, the oscillator frequency was ~125 kHz, resulting in an internal delay of 90º between x(t) and v(t) of ~249 clock cycles. This value, which can't be modified by default from the C routine, should be changed if the oscillator frequency is different from 125 kHz. It can be found in the Vivado project inside the block c_shift_ram_0.
+
+Similarly, the machine learning routine will probably require tuning the step size for a particular experiment. This should be easy to do since everything is included in the C routine, and the ML part is well documented.
 
 
 > By: Gerard Planes Conangla
