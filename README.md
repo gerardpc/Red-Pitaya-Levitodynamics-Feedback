@@ -98,7 +98,7 @@ Where fpga_X.XX is the current version, whatever it is. Reinitializing the red p
 
 6- Feedback bitstream, control routine and final remarks
 --------------
-Load the bitstream opt_control.bit to the RP as specified in the previous sections. Likewise, transfer from your PC the C file cpu_opt_control.c, compile it in the RP and run the output file. The feedback input x(t) should be connected to IN1, and the feedback output f(t) comes in OUT1. The (optional) machine learning feedback optimizer uses IN2 as the reference signal and tries to minimize its energy.
+Load the bitstream opt_control.bit to the RP as specified in the previous sections. Likewise, transfer from your PC the C file cpu_opt_control.c, compile it in the RP and run the output file. The feedback input x(t) should be connected to IN1, and the feedback output f(t) comes in OUT1. The (optional) machine learning feedback optimizer uses IN2 as the reference signal and tries to minimize its energy (internally, the FPGA squares IN2 and applies a first order digital lowpass filter: this is the quantity the ML routine minimizes).
 
 The C control routine should be pretty intuitive to navigate. The basic interface allows you to type
 
@@ -110,7 +110,7 @@ The C control routine should be pretty intuitive to navigate. The basic interfac
     'k' to kill (i.e. stop) the feedback!,
     'exit' to quit
 
-Here, k_p and k_d are the proportional and derivative terms of the feedback force. In other words, k_p is the coefficient of a force term that is proportional to x(t) and k_d is the coefficient of a force term that is proportional to x'(t). Since in our experiments we don't observe x'(t) directly, we exploit the oscillatory behaviour of the oscillator to approximate x'(t) by delaying the signal input by -90 degrees. This is achieved through the "delay" input, which uses a programmable shift register to implement a delay of n cycles of the internal clock signal (running at 62.5 MHz). It is suggested to first calibrate the feedback delay with a pure sinusoid of a similar frequency (in our case ~125 kHz) before trying with the real system. Similarly, the machine learning routine will probably require tuning the step size for a particular experiment. This should be easy to do since everything is included in the C routine, and the ML part is well documented.
+Here, k_p and k_d are the proportional and derivative terms of the feedback force. In other words, k_p is the coefficient of a force term that is proportional to x(t) and k_d is the coefficient of a force term that is proportional to x'(t). Since in our experiments we don't observe x'(t) directly, we exploit the oscillatory behaviour of the oscillator to approximate x'(t) by delaying the signal input by -90 degrees. This is achieved through the "delay" input, which uses a programmable shift register to implement a delay of n cycles of the internal clock signal (running at 125 MHz). It is suggested to first calibrate the feedback delay with a pure sinusoid of a similar frequency (in our case ~125 kHz) before trying with the real system. Similarly, the machine learning routine will probably require tuning the step size for a particular experiment. This should be easy to do since everything is included in the C routine, and the ML part is well documented.
 
 
 > By: Gerard Planes Conangla
