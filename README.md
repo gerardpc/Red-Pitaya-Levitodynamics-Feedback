@@ -10,6 +10,7 @@ Guide on what to do to get started with the Red Pitaya. It is in the order you s
 
 1 Get a Red Pitaya!
 --------------
+Quite clear what to do.
 
 2 Install fresh red pitaya image
 --------------
