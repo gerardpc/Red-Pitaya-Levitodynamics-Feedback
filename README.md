@@ -79,7 +79,7 @@ Now connect to red pitaya
 
 To load our bitstream to the FPGA (as opposed to the default RP program that loads once you access the RP from the browser): assume it is located in the /root/ folder of the Red Pitaya:
 
-    > cat /root/led_blink.bit > /dev/xdevcfg
+    > cat /root/whatever_name_you_like.bit > /dev/xdevcfg
 
 After this it should start running whatever we have programmed. To now run the C routine to control whatever parameters are accessible in the FPGA, first compile it with
 
@@ -98,7 +98,7 @@ Where fpga_X.XX is the current version, whatever it is. Reinitializing the red p
 
 6- Feedback bitstream, control routine and final remarks
 --------------
-Load the bitstream opt_control.bit to the RP as specified in the previous sections. Likewise, transfer from your PC the C file cpu_opt_control.c, compile it in the RP and run the output file. The feedback input x(t) should be connected to IN1, and the feedback output f(t) comes in OUT1. The (optional) machine learning feedback optimizer uses IN2 as the reference signal and tries to minimize its energy (internally, the FPGA squares IN2 and applies a first order digital lowpass filter: this is the quantity the ML routine minimizes).
+Load the bitstream feedback.bit to the RP as specified in the previous sections. Likewise, transfer from your PC the C file cpu_opt_control.c, compile it in the RP and run the output file. The feedback input x(t) should be connected to IN1, and the feedback output f(t) comes in OUT1. The (optional) machine learning feedback optimizer uses IN2 as the reference signal and tries to minimize its energy (internally, the FPGA squares IN2 and applies a first order digital lowpass filter: this is the quantity the ML routine minimizes).
 
 The C control routine should be pretty intuitive to navigate. The basic interface allows you to type
 
