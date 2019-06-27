@@ -8,8 +8,9 @@ in the references section.
 For any other comments or questions, drop me a message.
 
 
-Guide on what to do to get started with the Red Pitaya. It is in the order you should follow to get things working. You should exactly use the versions specified in this guide, otherwise I can't assure that it will work.
+Guide on what to do to get started with the Red Pitaya.
 --------------
+Follow this guide to get things working. You should exactly use the versions specified in here, otherwise I can't assure that it will work.
 
 
 1 Get a Red Pitaya!
