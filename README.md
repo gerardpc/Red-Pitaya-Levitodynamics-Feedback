@@ -96,9 +96,9 @@ If you want to roll back to the normal red pitaya bitstream type:
 Where fpga_X.XX is the current version, whatever it is. Reinitializing the red pitaya also works.
 
 
-6- Feedback bitstream, control routine and final remarks
+6- Details of the project: feedback bitstream, control routine and final remarks
 --------------
-Load the bitstream feedback.bit to the RP as specified in the previous sections. Likewise, transfer from your PC the C file cpu_opt_control.c, compile it in the RP and run the output file. The feedback input x(t) should be connected to IN1, and the feedback output f(t) comes in OUT1. The (optional) machine learning feedback optimizer uses IN2 as the reference signal and tries to minimize its energy (internally, the FPGA squares IN2 and applies a first order IIR digital lowpass filter: this is the quantity the ML routine minimizes).
+You should decide now if you want to use the pregenerated bitstream (which can be found inside the folder "Bitstream"), or generate it from the project with Vivado, possibly with some changes. In any case, once you have the .bit file, load it to the RP as specified in the previous sections. Likewise, transfer from your PC the C file cpu_opt_control.c, compile it in the RP and run the output file from a terminal. For the feedback to work, the input x(t) should be connected to the RP IN1, and the feedback output f(t) from OUT1. The (optional) machine learning feedback optimizer uses IN2 as the reference signal and tries to minimize its energy (internally, the FPGA squares IN2 and applies a first order IIR digital lowpass filter: this is the quantity the ML routine minimizes).
 
 The C control routine should be pretty intuitive to navigate. The basic interface allows you to type
 
