@@ -75,7 +75,7 @@ C code should always be compiled IN THE REDPITAYA, and also executed there. Once
 
 Now connect to red pitaya
 
-    > ssh root@192.168.1.3 (pw = “root”)
+    > ssh root@192.168.1.3
 
 To load our bitstream to the FPGA (as opposed to the default RP program that loads once you access the RP from the browser): assume it is located in the /root/ folder of the Red Pitaya:
 
