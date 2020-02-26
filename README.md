@@ -14,17 +14,17 @@ Guide on what to do to get started with the Red Pitaya.
 Follow this guide to get things working. You should exactly use the versions specified in here, otherwise I can't assure that it will work.
 
 
-1- Get a Red Pitaya!
+1 Get a Red Pitaya!
 --------------
 Quite clear what to do.
 
-2- Install fresh red pitaya image
+2 Install fresh red pitaya image
 --------------
 Windows:
 Download the image redpitaya_ubuntu_17-11-35_01-sep-2017.img, install to a microSD with win32diskimager. If the version is not this, I don’t guarantee that any of the following will work. Also, make sure that the microSD is of 32GB or less. Otherwise it will (probably) not work.
 
 
-3- Connect to the Red Pitaya (RP):
+3 Connect to the Red Pitaya (RP):
 --------------
 I recommend creating a local network with a switch, connected to an extra network card in the computer. 
 
@@ -51,7 +51,7 @@ Windows
 Like in ubuntu, but use Putty (https://www.putty.org/).
 
 
-4- Programming with the RP
+4 Programming with the RP
 --------------
 From now on it will be assumed that we work on Ubuntu. This section is ONLY REQUIRED IF YOU WANT TO MODIFY THE FPGA CODE. If not the case, you can just download the standard bistream file and load it to the Red Pitaya.
 
@@ -69,7 +69,7 @@ To compile the code and generate a bitstream, click on "Generate Bitstream". You
 To save the Vivado project (in an autocontained file without external dependencies), go to Vivavdo File -> Project -> Archive, selecting the desired options.
 
 
-5- Loading a bitstream and controlling the RP from the CPU with a C routine
+5 Loading a bitstream and controlling the RP from the CPU with a C routine
 --------------
 C code should always be compiled IN THE REDPITAYA, and also executed there. Once we have compiled our Vivado project and we have a bitstream (.bit) file. We need to copy this file to the redpitaya with (the folder below is just an example, but they all follow the same structure):
 
@@ -99,7 +99,7 @@ If you want to roll back to the normal red pitaya bitstream type:
 Where fpga_X.XX is the current version, whatever it is. Reinitializing the red pitaya also works.
 
 
-6- Details of the project: feedback bitstream, control routine and final remarks
+6 Details of the project: feedback bitstream, control routine and final remarks
 --------------
 You should decide now if you want to use the pregenerated bitstream (which can be found inside the folder "Bitstream"), or generate it from the project with Vivado, possibly with some changes. In any case, once you have the .bit file, load it to the RP as specified in the previous sections. Likewise, transfer from your PC the C file cpu_opt_control.c, compile it in the RP and run the output file from a terminal. For the feedback to work, the input x(t) should be connected to the RP IN1, and the feedback output f(t) from OUT1. The (optional) machine learning feedback optimizer uses IN2 as the reference signal and tries to minimize its energy (internally, the FPGA squares IN2 and applies a first order IIR digital lowpass filter: this is the quantity the ML routine minimizes).
 
