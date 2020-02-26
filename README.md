@@ -39,8 +39,9 @@ To actually work inside the RP, you will need to connect from a terminal. How to
 
 Ubuntu
 With ssh: 
+
     > ssh root@rp_ip_address
-Password: root
+with password: root
 
 You should be inside the redpitaya, that runs a version of Linux. Hence, you can do anything you would do on a Linux machine (like, e.g., compiling C code with gcc):
 
@@ -62,7 +63,9 @@ Install Vivado 2017.2 with SDK and WEBpackage for zynq7000 in Ubuntu 18.04 LTS. 
 In design > processing system we see the zynq important block: fpga and ports. Fclk_cl0 is the clock.
 
 Check how connectors point somewhere. This tells you if that is an input, output, or it is bidirectional.
-To compile the code and generate a bitstream, click on "Generate Bitstream".
+To compile the code and generate a bitstream, click on "Generate Bitstream". You will find the generated bitstream in
+./project/project_runs/impl_1/system_wrapper.bit
+
 To save the Vivado project (in an autocontained file without external dependencies), go to Vivavdo File -> Project -> Archive, selecting the desired options.
 
 
