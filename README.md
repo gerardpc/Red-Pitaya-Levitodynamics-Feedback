@@ -16,20 +16,25 @@ Follow this guide to get things working. You should exactly use the versions spe
 
 1 Get a Red Pitaya!
 --------------
-Quite clear what to do.
+This was tested with Redpitaya STEMLab 125-14 (originally Red Pitaya v1.1).
 
 2 Install fresh red pitaya image
 --------------
-Windows:
-Download the image redpitaya_ubuntu_17-11-35_01-sep-2017.img, install to a microSD with win32diskimager. If the version is not this, I don’t guarantee that any of the following will work. Also, make sure that the microSD is of 32GB or less. Otherwise it will (probably) not work.
+Download the RP image from https://redpitaya.readthedocs.io/en/latest/quickStart/SDcard/SDcard.html
+This was tested with redpitaya_ubuntu_17-11-35_01-sep-2017.img and it is suggested to pick the closest version to this available. If you can't fine the exact same .img file, drop me a message.
 
+Windows:
+Install the image to a microSD with "win32diskimager". Make sure that the microSD is of 32GB or less. Otherwise it will (probably) not work.
+
+Ubuntu:
+Install the image to a microSD with "startup disk". Make sure that the microSD is of 32GB or less. Otherwise it will (probably) not work.
 
 3 Connect to the Red Pitaya (RP):
 --------------
 I recommend creating a local network with a switch, connected to an extra network card in the computer. 
 
 Use this IP for the LAN: router/switch gateway 192.168.1.1, mask 255.255.255.0
-Connect to the RP by typing “rpxxxxxx.local/” (where xxxxxx are the last 6 digits of the RP MAC address), then change IP to static with:
+Connect to the RP by typing “rp-xxxxxx.local/” (where xxxxxx are the last 6 digits of the RP MAC address), then change IP to static with:
 
 system > network manager > Wired connection 
 status: Static, IP = 192.168.1.X,
@@ -57,7 +62,22 @@ From now on it will be assumed that we work on Ubuntu. This section is ONLY REQU
 
 Make sure the RP has an IP assigned. Then:
 
-Install Vivado 2017.2 with SDK and WEBpackage for zynq7000 in Ubuntu 18.04 LTS. If you want to create a new project: 
+Install Vivado 2017.2 with SDK and WEBpackage for zynq7000 in Ubuntu 18.04 LTS. To obtain the binaries:
+
+- Create an account at https://www.xilinx.com (xilinx)
+- Download Vivado 2017.2 with SDK and WEBpackage for zynq7000 in Ubuntu 18.04 LTS 
+https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/archive.html
+https://www.xilinx.com/member/forms/download/xef.html?filename=Xilinx_Vivado_SDK_2017.2_0616_1_Lin64.bin
+
+- Installation:
+  - Open command line
+  - Go to folder where you downloaded the .bin file
+  - Give permission `chmod a+x Xilinx_Vivado_SDK_2017.2_0616_1_Lin64.bin`
+  - Run installer `./Xilinx_Vivado_SDK_2017.2_0616_1_Lin64.bin`
+  - You need to connect with your credentials and select `Vivado HL WebPACK` (the first option)
+  - In the following screen also select the SDK and from devices select only SoCs otherwise stick to the defaults!
+
+Once Vivado is installed, start it. To create a new project: 
 - Open vivado -> create new project -> During the project creation the script specifies Red Pitaya’s FPGA part name xc7z010clg400-1 (it's fundamental to select this one, otherwise who knows what will happen).
 - If not, you can start working by modifying some already working example, such as the feedback code provided here. A nice guide (which I used instensively) is this http://antonpotocnik.com/?p=487360. It’s a good idea to read it in detail or at least take a good look.
 In design > processing system we see the zynq important block: fpga and ports. Fclk_cl0 is the clock.
